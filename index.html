@@ -475,6 +475,7 @@ async function confirmDeleteAccount(){
   }catch(e){hideL();showToast('❌ Error: '+e.message);}
 }
 function enterApp(){
+  showScreen('mainScreen');
   renderStatus();
   document.getElementById('topbarUser').textContent='👤 '+ME.name+' · '+(ME.rut||ME.rn);
   if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();
