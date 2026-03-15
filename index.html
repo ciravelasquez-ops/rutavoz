@@ -309,7 +309,12 @@ button{cursor:pointer;border:none;background:none;}
   </div>
   <div style="flex:1;overflow-y:auto;padding:20px 16px 40px;">
     <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:28px;">
-      <div id="profileAv" style="width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;margin-bottom:12px;border:3px solid var(--orange);"></div>
+      <!-- Foto de perfil clickeable -->
+      <div style="position:relative;margin-bottom:12px;" onclick="pickProfilePhoto()">
+        <div id="profileAv" style="width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;border:3px solid var(--orange);overflow:hidden;background:var(--bg3);"></div>
+        <div style="position:absolute;bottom:0;right:0;width:28px;height:28px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid white;cursor:pointer;">📷</div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(event)">
       <div id="profileNameBig" style="font-size:18px;font-weight:800;"></div>
       <div id="profileRutBig" style="font-size:13px;color:var(--muted);margin-top:3px;"></div>
       <div style="margin-top:14px;text-align:center;">
@@ -565,20 +570,54 @@ function renderMsgs(){
       <div class="bub-text">${esc(m.text)}</div>
       <div class="bub-footer"><button class="tts-btn" onclick="speakTTS('${escA(m.text)}')">🔊 <span>Oír</span></button><span class="btime">${fmtT(m.ts)}</span></div>`;}
     else if(m.type==='voice'){inner=`<div class="vbub"><button class="pbtn" onclick="playVoice(${i},'${escA(m.url||'')}','${escA(m.text||'')}')">▶</button><div class="ww">${waveH()}</div><span class="vdur">${fmtDur(m.dur||0)}</span></div><div style="padding:0 13px 7px;display:flex;justify-content:flex-end"><span class="btime">${fmtT(m.ts)}</span></div>`;}
-    else if(m.type==='doc'){inner=`<div class="dbub"><div class="dic">${dico(m.ft)}</div><div style="flex:1;min-width:0"><div class="dname">${esc(m.fn||'Archivo')}</div><div class="dsize">${m.fs||''}</div></div></div>
-      <div class="dbtns"><button class="dbtn2 open" onclick="openDoc(${i})">📂 Abrir</button><button class="dbtn2 share" onclick="openShareSheet('${escA(m.fn||'')}')">📤</button></div>
-      <div style="padding:0 13px 7px;display:flex;justify-content:flex-end"><span class="btime">${fmtT(m.ts)}</span></div>`;}
+    else if(m.type==='doc'){
+      if(m.ft==='image'&&m.url){
+        // ✅ Imágenes se ven directo en el chat
+        inner=`${CHAT.isG&&!isMe?`<div class="bub-sender" style="color:${sender.color}">${esc(sender.name||'?')}</div>`:''}
+          <img src="${escA(m.url)}" onclick="openDoc(${i})" style="max-width:220px;max-height:220px;width:100%;border-radius:12px;display:block;cursor:pointer;padding:6px 6px 2px;" onerror="this.style.display='none'">
+          <div style="padding:2px 10px 7px;display:flex;justify-content:flex-end"><span class="btime">${fmtT(m.ts)}</span></div>`;
+      }else{
+        inner=`<div class="dbub"><div class="dic">${dico(m.ft)}</div><div style="flex:1;min-width:0"><div class="dname">${esc(m.fn||'Archivo')}</div><div class="dsize">${m.fs||''}</div></div></div>
+          <div class="dbtns"><button class="dbtn2 open" onclick="openDoc(${i})">📂 Abrir</button><button class="dbtn2 share" onclick="openShareSheet('${escA(m.fn||'')}')">📤</button></div>
+          <div style="padding:0 13px 7px;display:flex;justify-content:flex-end"><span class="btime">${fmtT(m.ts)}</span></div>`;
+      }
+    }
     html+=`<div class="mrow ${side}">${!isMe?`<div class="mini-av" style="background:${sender.color}22;color:${sender.color}">${sender.initials||'?'}</div>`:''}<div class="bub ${side}" oncontextmenu="delMsg(event,${i})" ontouchstart="startHold(${i})" ontouchend="clearHold()">${inner}</div></div>`;
   });
   area.innerHTML=html;area.scrollTop=area.scrollHeight;
 }
 let holdTimer=null;
-function startHold(i){holdTimer=setTimeout(()=>confirmDelMsg(i),600);}
+function startHold(i){holdTimer=setTimeout(()=>showMsgMenu(i),650);}
 function clearHold(){clearTimeout(holdTimer);}
-function delMsg(e,i){e.preventDefault();confirmDelMsg(i);}
-function confirmDelMsg(i){
-  if(!confirm('¿Eliminar este mensaje?'))return;
+function delMsg(e,i){e.preventDefault();showMsgMenu(i);}
+
+function showMsgMenu(i){
+  // Mostrar menú bonito para eliminar
+  const existing=document.getElementById('msgMenu');
+  if(existing)existing.remove();
+  const menu=document.createElement('div');
+  menu.id='msgMenu';
+  menu.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:600;display:flex;align-items:flex-end;justify-content:center;';
+  menu.innerHTML=`
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:16px 0 30px;">
+      <div style="width:36px;height:4px;background:#DDE1EA;border-radius:4px;margin:0 auto 16px;"></div>
+      <div style="font-size:13px;color:#6B7280;text-align:center;margin-bottom:12px;font-weight:700;">OPCIONES</div>
+      <button onclick="doDelMsg(${i})" style="width:100%;padding:16px 24px;text-align:left;font-size:16px;font-weight:700;color:#FF4C4C;background:none;border:none;border-top:1px solid #EEF1F6;font-family:var(--font);">🗑️ Eliminar mensaje</button>
+      <button onclick="document.getElementById('msgMenu').remove()" style="width:100%;padding:16px 24px;text-align:left;font-size:16px;font-weight:600;color:#6B7280;background:none;border:none;border-top:1px solid #EEF1F6;font-family:var(--font);">✕ Cancelar</button>
+    </div>`;
+  menu.addEventListener('click',e=>{if(e.target===menu)menu.remove();});
+  document.body.appendChild(menu);
+}
+
+async function doDelMsg(i){
+  const menu=document.getElementById('msgMenu');
+  if(menu)menu.remove();
   const msgs=getMsgs(CHAT.chatId);
+  const msg=msgs[i];
+  // Borrar de Firebase si existe
+  if(!DEMO&&db&&msg&&msg.id){
+    try{await db.collection('chats').doc(CHAT.chatId).collection('msgs').doc(msg.id).delete();}catch{}
+  }
   msgs.splice(i,1);
   saveMsgs(CHAT.chatId,msgs);
   renderMsgs();renderList();
@@ -620,7 +659,32 @@ function showNotifs(){notifs.forEach(n=>n.unread=false);document.getElementById(
 function clearNotifs(){notifs=[];showNotifs();showToast('Notificaciones eliminadas');}
 const PROFILE_COLORS=['#FF6B2B','#00D9FF','#39FF14','#FF2D78','#FFD700','#4C9EFF','#23D18B','#A855F7','#F97316','#EF4444'];
 function openProfile(){if(!ME)return;document.getElementById('editName').value=ME.name||'';document.getElementById('editRole').value=ME.role||'';document.getElementById('editRutShow').textContent=ME.rut||ME.rn||'';renderProfileAv();renderColorPicker();renderProfileStatus();showScreen('profileScreen');}
-function renderProfileAv(){const av=document.getElementById('profileAv');av.textContent=ME.initials||'?';av.style.background=ME.color+'22';av.style.color=ME.color;av.style.borderColor=ME.color;document.getElementById('profileNameBig').textContent=ME.name||'';document.getElementById('profileRutBig').textContent=ME.rut||ME.rn||'';}
+function renderProfileAv(){
+  const av=document.getElementById('profileAv');
+  av.style.borderColor=ME.color;
+  if(ME.photo){
+    av.innerHTML=`<img src="${ME.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    av.style.background='none';av.textContent='';
+  }else{
+    av.innerHTML='';av.textContent=ME.initials||'?';
+    av.style.background=ME.color+'22';av.style.color=ME.color;
+  }
+  document.getElementById('profileNameBig').textContent=ME.name||'';
+  document.getElementById('profileRutBig').textContent=ME.rut||ME.rn||'';
+}
+function pickProfilePhoto(){document.getElementById('photoInput').click();}
+function handleProfilePhoto(e){
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    ME.photo=ev.target.result;
+    LS.set('rv_me',ME);
+    renderProfileAv();
+    showToast('📷 Foto actualizada — toca Guardar');
+  };
+  reader.readAsDataURL(f);
+  e.target.value='';
+}
 function renderColorPicker(){document.getElementById('colorPicker').innerHTML=PROFILE_COLORS.map(c=>`<div onclick="pickColor('${c}')" style="width:32px;height:32px;border-radius:50%;background:${c};cursor:pointer;border:3px solid ${ME.color===c?'#1A1D2E':'transparent'};transform:${ME.color===c?'scale(1.2)':'scale(1)'}"></div>`).join('');}
 function pickColor(c){ME.color=c;ME.initials=initials(ME.name||'');renderProfileAv();renderColorPicker();}
 function renderProfileStatus(){document.getElementById('profileStatusOpts').innerHTML=STS.map(s=>`<button onclick="setStatus('${s.k}')" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;border:1.5px solid ${ME.status===s.k?'var(--orange)':'var(--border)'};background:${ME.status===s.k?'#FFF0E8':'var(--bg3)'};color:${ME.status===s.k?'var(--orange)':'var(--muted)'};font-size:13px;font-weight:700;font-family:var(--font);">${s.l}</button>`).join('');}
@@ -628,9 +692,14 @@ async function saveProfile(){
   const name=document.getElementById('editName').value.trim(),role=document.getElementById('editRole').value.trim();
   if(!name){showToast('⚠️ El nombre no puede estar vacío');return;}
   ME.name=name;ME.role=role;ME.initials=initials(name);LS.set('rv_me',ME);
-  if(!DEMO&&db){try{await db.collection('users').doc(ME.uid).update({name:ME.name,role:ME.role,initials:ME.initials,color:ME.color});}catch{}}
+  if(!DEMO&&db){try{await db.collection('users').doc(ME.uid).update({name:ME.name,role:ME.role,initials:ME.initials,color:ME.color,photo:ME.photo||''});}catch{}}
   document.getElementById('topbarUser').textContent='👤 '+ME.name+' · '+(ME.rut||ME.rn);
   renderStatus();showToast('✅ Perfil actualizado');showScreen('mainScreen');
+}
+function avHtml(u,size,grp){
+  const bg=u.color+'22',cl=u.color,br=grp?'14px':'50%';
+  if(u.photo)return`<div class="av${grp?' av-grp':''}" style="width:${size}px;height:${size}px;background:${bg};border-radius:${br};overflow:hidden;flex-shrink:0;"><img src="${u.photo}" style="width:100%;height:100%;object-fit:cover;"></div>`;
+  return`<div class="av${grp?' av-grp':''}" style="width:${size}px;height:${size}px;background:${bg};color:${cl};border-radius:${br};">${u.initials||'?'}</div>`;
 }
 function openSheet(id){document.getElementById('sheetOv').classList.add('on');document.getElementById(id).classList.add('open');}
 function closeAllSheets(){document.getElementById('sheetOv').classList.remove('on');document.querySelectorAll('.bsheet').forEach(s=>s.classList.remove('open'));}
