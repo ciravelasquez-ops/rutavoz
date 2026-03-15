@@ -568,9 +568,21 @@ function renderMsgs(){
     else if(m.type==='doc'){inner=`<div class="dbub"><div class="dic">${dico(m.ft)}</div><div style="flex:1;min-width:0"><div class="dname">${esc(m.fn||'Archivo')}</div><div class="dsize">${m.fs||''}</div></div></div>
       <div class="dbtns"><button class="dbtn2 open" onclick="openDoc(${i})">📂 Abrir</button><button class="dbtn2 share" onclick="openShareSheet('${escA(m.fn||'')}')">📤</button></div>
       <div style="padding:0 13px 7px;display:flex;justify-content:flex-end"><span class="btime">${fmtT(m.ts)}</span></div>`;}
-    html+=`<div class="mrow ${side}">${!isMe?`<div class="mini-av" style="background:${sender.color}22;color:${sender.color}">${sender.initials||'?'}</div>`:''}<div class="bub ${side}">${inner}</div></div>`;
+    html+=`<div class="mrow ${side}">${!isMe?`<div class="mini-av" style="background:${sender.color}22;color:${sender.color}">${sender.initials||'?'}</div>`:''}<div class="bub ${side}" oncontextmenu="delMsg(event,${i})" ontouchstart="startHold(${i})" ontouchend="clearHold()">${inner}</div></div>`;
   });
   area.innerHTML=html;area.scrollTop=area.scrollHeight;
+}
+let holdTimer=null;
+function startHold(i){holdTimer=setTimeout(()=>confirmDelMsg(i),600);}
+function clearHold(){clearTimeout(holdTimer);}
+function delMsg(e,i){e.preventDefault();confirmDelMsg(i);}
+function confirmDelMsg(i){
+  if(!confirm('¿Eliminar este mensaje?'))return;
+  const msgs=getMsgs(CHAT.chatId);
+  msgs.splice(i,1);
+  saveMsgs(CHAT.chatId,msgs);
+  renderMsgs();renderList();
+  showToast('🗑️ Mensaje eliminado');
 }
 function mkMsg(x){return{id:'m'+Date.now()+Math.random().toString(36).slice(2),from:ME.uid,sn:ME.name,ts:Date.now(),read:false,...x};}
 function pushMsg(msg){const msgs=getMsgs(CHAT.chatId);msgs.push(msg);saveMsgs(CHAT.chatId,msgs);if(!DEMO&&db)saveFS(msg);renderMsgs();renderList();}
