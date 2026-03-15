@@ -419,26 +419,10 @@ const COLS=['#FF6B2B','#00D9FF','#39FF14','#FF2D78','#FFD700','#4C9EFF','#FF8C55
 function randCol(){return COLS[Math.floor(Math.random()*COLS.length)];}
 function chatId(a,b){return[a,b].sort().join('__');}
 
-// ✅ CORRECCIÓN PRINCIPAL: verifica si el usuario aún existe en Firebase
-async function checkSession(){
-  const saved=LS.get('rv_me');
-  if(!saved){showScreen('loginScreen');return;}
-  if(DEMO){ME=saved;enterApp();return;}
-  try{
-    const doc=await db.collection('users').doc(saved.uid).get();
-    if(doc.exists){
-      ME={...doc.data(),uid:doc.id};
-      LS.set('rv_me',ME);
-      enterApp();
-    }else{
-      // Usuario fue eliminado — limpiar sesión y mostrar login
-      LS.del('rv_me');
-      showScreen('loginScreen');
-    }
-  }catch(e){
-    // Sin conexión — usar datos guardados
-    ME=saved;enterApp();
-  }
+// ✅ CORRECCIÓN: sin contraseña, siempre mostrar login con RUT
+function checkSession(){
+  LS.del('rv_me');
+  showScreen('loginScreen');
 }
 
 async function doLogin(){
