@@ -242,14 +242,89 @@ button{cursor:pointer;border:none;background:none;}
         <button class="btn-main" onclick="doLogin()">🚀 Continuar</button>
         <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;">Si es tu primera vez, se creará tu cuenta automáticamente 👆</p>
       </div>
+
+      <!-- PIN STEP -->
+      <div class="login-card" id="pinForm" style="display:none;margin-top:16px;">
+        <h2>🔐 Ingresa tu PIN</h2>
+        <div class="sub" id="pinSub">PIN de 4 dígitos</div>
+        <div class="err" id="pinErr"></div>
+        <div class="field">
+          <label>PIN (4 dígitos)</label>
+          <input type="password" id="pinInput" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+            style="font-size:28px;letter-spacing:10px;text-align:center;"
+            onkeydown="if(event.key==='Enter')doPin()">
+        </div>
+        <button class="btn-main" onclick="doPin()">✅ Entrar</button>
+        <div class="switch-link"><a href="#" onclick="cancelPin()">← Volver</a></div>
+        <div style="text-align:center;margin-top:10px;">
+          <a href="#" onclick="showResetVerify()" style="font-size:13px;color:var(--muted);text-decoration:none;">¿Olvidaste tu PIN? Recuperar acceso</a>
+        </div>
+      </div>
+
+      <!-- RESETEAR PIN -->
+      <div class="login-card" id="resetPinForm" style="display:none;margin-top:16px;">
+        <h2>🔑 Nuevo PIN</h2>
+        <div class="sub">Crea un nuevo PIN de 4 dígitos</div>
+        <div class="err" id="resetPinErr"></div>
+        <div class="field">
+          <label>Nuevo PIN (4 dígitos)</label>
+          <input type="password" id="newPin1" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+            style="font-size:28px;letter-spacing:10px;text-align:center;">
+        </div>
+        <div class="field">
+          <label>Confirmar PIN</label>
+          <input type="password" id="newPin2" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+            style="font-size:28px;letter-spacing:10px;text-align:center;"
+            onkeydown="if(event.key==='Enter')doResetPin()">
+        </div>
+        <button class="btn-main" onclick="doResetPin()">✅ Guardar nuevo PIN</button>
+        <div class="switch-link"><a href="#" onclick="cancelResetPin()">← Volver</a></div>
+      </div>
+
       <div class="login-card" id="regForm" style="display:none;margin-top:16px;">
         <h2>👋 ¡Bienvenido!</h2>
         <div class="sub">Completa tus datos para continuar</div>
         <div class="err" id="regErr"></div>
         <div class="field"><label>Nombre completo</label><input type="text" id="rName" placeholder="Carlos Muñoz" maxlength="40"></div>
         <div class="field"><label>Cargo / Rol</label><input type="text" id="rRole" placeholder="Ej: Conductor, Jefe de Flota..."></div>
+        <div class="field"><label>📧 Correo electrónico</label>
+          <input type="email" id="rEmail" placeholder="correo@gmail.com" maxlength="60" autocomplete="email"></div>
+        <div class="field"><label>🔐 PIN de seguridad (4 dígitos)</label>
+          <input type="password" id="rPin" placeholder="••••" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+            style="font-size:24px;letter-spacing:8px;text-align:center;">
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;">📌 Si olvidas tu PIN, recibirás un código de recuperación en tu correo.</p>
         <button class="btn-main" onclick="doRegister()">✅ Crear mi cuenta</button>
         <div class="switch-link"><a href="#" onclick="cancelReg()">← Volver</a></div>
+      </div>
+
+      <!-- OLVIDÉ MI PIN: ingresar correo -->
+      <div class="login-card" id="resetPinVerify" style="display:none;margin-top:16px;">
+        <h2>🔑 Recuperar acceso</h2>
+        <div class="sub">Te enviaremos un código a tu correo registrado</div>
+        <div class="err" id="resetVerifyErr"></div>
+        <div class="field">
+          <label>📧 Correo electrónico registrado</label>
+          <input type="email" id="verifyEmail" placeholder="correo@gmail.com" maxlength="60"
+            onkeydown="if(event.key==='Enter')doSendCode()">
+        </div>
+        <button class="btn-main" onclick="doSendCode()">📨 Enviar código</button>
+        <div class="switch-link"><a href="#" onclick="cancelResetVerify()">← Volver</a></div>
+      </div>
+
+      <!-- INGRESAR CÓDIGO RECIBIDO -->
+      <div class="login-card" id="resetCodeForm" style="display:none;margin-top:16px;">
+        <h2>📨 Ingresa el código</h2>
+        <div class="sub" id="codeSentTo">Código enviado a tu correo</div>
+        <div class="err" id="resetCodeErr"></div>
+        <div class="field">
+          <label>Código de 6 dígitos</label>
+          <input type="text" id="resetCode" placeholder="000000" maxlength="6" inputmode="numeric"
+            style="font-size:28px;letter-spacing:8px;text-align:center;"
+            onkeydown="if(event.key==='Enter')doVerifyCode()">
+        </div>
+        <button class="btn-main" onclick="doVerifyCode()">✅ Verificar código</button>
+        <div class="switch-link"><a href="#" onclick="cancelResetVerify()">← Volver</a></div>
       </div>
     </div>
   </div>
@@ -423,12 +498,11 @@ function initials(n){return(n||'??').split(' ').slice(0,2).map(w=>w[0]||'').join
 const COLS=['#FF6B2B','#00D9FF','#39FF14','#FF2D78','#FFD700','#4C9EFF','#FF8C55','#23D18B'];
 function randCol(){return COLS[Math.floor(Math.random()*COLS.length)];}
 function chatId(a,b){return[a,b].sort().join('__');}
+function hashPin(p){let h=0;for(let i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return String(h);}
 
-// ✅ CORRECCIÓN: sin contraseña, siempre mostrar login con RUT
-function checkSession(){
-  LS.del('rv_me');
-  showScreen('loginScreen');
-}
+function checkSession(){LS.del('rv_me');showScreen('loginScreen');}
+
+let LOGIN_USER=null;
 
 async function doLogin(){
   const rut=document.getElementById('lRut').value.trim();
@@ -439,24 +513,146 @@ async function doLogin(){
   showL('Buscando...');
   if(DEMO){
     const users=LS.get('rv_users',{});
-    if(users[rn]){ME=users[rn];LS.set('rv_me',ME);hideL();enterApp();}
+    if(users[rn]){LOGIN_USER=users[rn];hideL();showPinForm();}
     else{hideL();PENDING_RUT=rut;showRegForm();}
     return;
   }
   try{
     const snap=await db.collection('users').where('rn','==',rn).limit(1).get();
-    if(!snap.empty){ME={...snap.docs[0].data(),uid:snap.docs[0].id};LS.set('rv_me',ME);hideL();enterApp();}
+    if(!snap.empty){LOGIN_USER={...snap.docs[0].data(),uid:snap.docs[0].id};hideL();showPinForm();}
     else{hideL();PENDING_RUT=rut;showRegForm();}
   }catch(e){hideL();showToast('Error: '+e.message);}
 }
-function showRegForm(){document.getElementById('loginForm').style.display='none';document.getElementById('regForm').style.display='';document.getElementById('rName').focus();}
-function cancelReg(){PENDING_RUT='';document.getElementById('loginForm').style.display='';document.getElementById('regForm').style.display='none';document.getElementById('regErr').style.display='none';}
+
+const QUESTIONS={};
+let RESET_CODE='';
+function showResetVerify(){
+  document.getElementById('pinForm').style.display='none';
+  document.getElementById('resetPinVerify').style.display='';
+  document.getElementById('resetVerifyErr').style.display='none';
+  document.getElementById('verifyEmail').value='';
+  setTimeout(()=>document.getElementById('verifyEmail').focus(),100);
+}
+function cancelResetVerify(){
+  document.getElementById('resetPinVerify').style.display='none';
+  document.getElementById('resetCodeForm').style.display='none';
+  document.getElementById('pinForm').style.display='';
+  RESET_CODE='';
+}
+async function doSendCode(){
+  const email=document.getElementById('verifyEmail').value.trim().toLowerCase();
+  const err=document.getElementById('resetVerifyErr');err.style.display='none';
+  if(!email||!email.includes('@')){err.style.display='block';err.textContent='Ingresa un correo válido.';return;}
+  if(!LOGIN_USER){cancelResetVerify();return;}
+  if(!LOGIN_USER.email||LOGIN_USER.email.toLowerCase()!==email){
+    err.style.display='block';err.textContent='❌ Correo incorrecto. No coincide con el registrado.';return;}
+  // Generar código de 6 dígitos
+  RESET_CODE=String(Math.floor(100000+Math.random()*900000));
+  // Enviar por mailto (abre cliente de correo)
+  const subject=encodeURIComponent('RutaVoz CAIV SPA — Código de recuperación');
+  const body=encodeURIComponent(
+    'Hola '+LOGIN_USER.name+',\n\n'+
+    'Tu código de recuperación de PIN es:\n\n'+
+    '   '+RESET_CODE+'\n\n'+
+    'Este código expira en 10 minutos.\n\n'+
+    'Si no solicitaste esto, ignora este mensaje.\n\n'+
+    'RutaVoz CAIV SPA'
+  );
+  window.open('mailto:'+email+'?subject='+subject+'&body='+body);
+  // Mostrar pantalla de código
+  document.getElementById('resetPinVerify').style.display='none';
+  document.getElementById('resetCodeForm').style.display='';
+  document.getElementById('codeSentTo').textContent='Código enviado a: '+email;
+  document.getElementById('resetCodeErr').style.display='none';
+  document.getElementById('resetCode').value='';
+  showToast('📧 Revisa tu correo electrónico');
+}
+function doVerifyCode(){
+  const code=document.getElementById('resetCode').value.trim();
+  const err=document.getElementById('resetCodeErr');err.style.display='none';
+  if(!code||code.length!==6){err.style.display='block';err.textContent='Ingresa el código de 6 dígitos.';return;}
+  if(code!==RESET_CODE){err.style.display='block';err.textContent='❌ Código incorrecto.';document.getElementById('resetCode').value='';return;}
+  RESET_CODE='';
+  document.getElementById('resetCodeForm').style.display='none';
+  showResetPin();
+}
+function showResetPin(){
+  document.getElementById('resetPinForm').style.display='';
+  document.getElementById('resetPinErr').style.display='none';
+  document.getElementById('newPin1').value='';
+  document.getElementById('newPin2').value='';
+  setTimeout(()=>document.getElementById('newPin1').focus(),100);
+}
+function cancelResetPin(){
+  document.getElementById('resetPinForm').style.display='none';
+  document.getElementById('pinForm').style.display='';
+}
+async function doResetPin(){
+  const p1=document.getElementById('newPin1').value.trim();
+  const p2=document.getElementById('newPin2').value.trim();
+  const err=document.getElementById('resetPinErr');err.style.display='none';
+  if(p1.length!==4||isNaN(p1)){err.style.display='block';err.textContent='El PIN debe ser exactamente 4 dígitos.';return;}
+  if(p1!==p2){err.style.display='block';err.textContent='Los PINs no coinciden.';return;}
+  if(!LOGIN_USER){cancelResetPin();return;}
+  showL('Guardando nuevo PIN...');
+  LOGIN_USER.pin=hashPin(p1);
+  try{
+    if(!DEMO&&db){await db.collection('users').doc(LOGIN_USER.uid).update({pin:LOGIN_USER.pin});}
+    else{const users=LS.get('rv_users',{});if(users[LOGIN_USER.rn])users[LOGIN_USER.rn].pin=LOGIN_USER.pin;LS.set('rv_users',users);}
+    ME=LOGIN_USER;LS.set('rv_me',ME);
+    hideL();
+    document.getElementById('resetPinForm').style.display='none';
+    showToast('✅ PIN actualizado, entrando...');
+    enterApp();
+  }catch(e){hideL();showToast('Error: '+e.message);}
+}
+function showPinForm(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('pinForm').style.display='';
+  document.getElementById('pinErr').style.display='none';
+  document.getElementById('pinInput').value='';
+  setTimeout(()=>document.getElementById('pinInput').focus(),100);
+}
+function cancelPin(){
+  LOGIN_USER=null;
+  document.getElementById('pinForm').style.display='none';
+  document.getElementById('loginForm').style.display='';
+}
+function doPin(){
+  const pin=document.getElementById('pinInput').value.trim();
+  const err=document.getElementById('pinErr');err.style.display='none';
+  if(pin.length!==4||isNaN(pin)){err.style.display='block';err.textContent='El PIN debe ser exactamente 4 dígitos.';return;}
+  if(!LOGIN_USER){cancelPin();return;}
+  if(LOGIN_USER.pin&&LOGIN_USER.pin!==hashPin(pin)){
+    err.style.display='block';err.textContent='❌ PIN incorrecto.';
+    document.getElementById('pinInput').value='';return;
+  }
+  ME=LOGIN_USER;LS.set('rv_me',ME);
+  document.getElementById('pinForm').style.display='none';
+  enterApp();
+}
+
+function showRegForm(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('regForm').style.display='';
+  document.getElementById('rName').focus();
+}
+function cancelReg(){
+  PENDING_RUT='';
+  document.getElementById('loginForm').style.display='';
+  document.getElementById('regForm').style.display='none';
+  document.getElementById('regErr').style.display='none';
+}
 async function doRegister(){
   const name=document.getElementById('rName').value.trim(),role=document.getElementById('rRole').value.trim();
+  const email=document.getElementById('rEmail').value.trim().toLowerCase();
+  const pin=document.getElementById('rPin').value.trim();
   const err=document.getElementById('regErr');err.style.display='none';
   if(!name){err.style.display='block';err.textContent='Ingresa tu nombre completo.';return;}
+  if(!email||!email.includes('@')){err.style.display='block';err.textContent='Ingresa un correo electrónico válido.';return;}
+  if(pin.length!==4||isNaN(pin)){err.style.display='block';err.textContent='El PIN debe ser exactamente 4 dígitos numéricos.';return;}
   const rn=norm(PENDING_RUT);
-  const user={rn,rut:PENDING_RUT,name,role:role||'Conductor',color:randCol(),initials:initials(name),status:'disponible',ts:Date.now()};
+  const user={rn,rut:PENDING_RUT,name,role:role||'Conductor',email,color:randCol(),initials:initials(name),status:'disponible',pin:hashPin(pin),ts:Date.now()};
   showL('Creando cuenta...');
   if(DEMO){const users=LS.get('rv_users',{});user.uid='u_'+rn;users[rn]=user;LS.set('rv_users',users);ME=user;LS.set('rv_me',ME);hideL();enterApp();return;}
   try{
@@ -466,7 +662,7 @@ async function doRegister(){
     ME={...user,uid:ref.id};LS.set('rv_me',ME);hideL();enterApp();
   }catch(e){hideL();showToast('Error: '+e.message);}
 }
-function doLogout(){unsubs.forEach(u=>u());unsubs=[];CONTACTS_CACHE=[];LS.del('rv_me');ME=null;document.getElementById('loginForm').style.display='';document.getElementById('regForm').style.display='none';document.getElementById('lRut').value='';showScreen('loginScreen');showToast('Sesión cerrada');}
+function doLogout(){unsubs.forEach(u=>u());unsubs=[];CONTACTS_CACHE=[];LS.del('rv_me');ME=null;LOGIN_USER=null;RESET_CODE='';['loginForm','regForm','pinForm','resetPinForm','resetPinVerify','resetCodeForm'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});document.getElementById('loginForm').style.display='';document.getElementById('lRut').value='';showScreen('loginScreen');showToast('Sesión cerrada');}
 function openDeleteModal(){document.getElementById('deleteModal').classList.add('on');}
 function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('on');}
 async function confirmDeleteAccount(){
