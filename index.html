@@ -6,7 +6,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#0D1117">
+<meta name="theme-color" content="#FF6B2B">
 <title>RutaVoz — CAIV SPA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
@@ -39,6 +39,7 @@ button{cursor:pointer;border:none;background:none;}
 .sl-dot:nth-child(3){background:var(--lime);animation-delay:.4s;}
 @keyframes ldot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1.2);opacity:1}}
 .splash-status{font-size:12px;color:#6B7280;margin-top:18px;}
+
 #loginScreen{align-items:center;justify-content:flex-start;overflow-y:auto;padding:20px 16px 40px;}
 .login-wrap{width:100%;max-width:380px;margin:auto;}
 .login-logo{text-align:center;padding:28px 0 20px;}
@@ -46,7 +47,8 @@ button{cursor:pointer;border:none;background:none;}
 .login-logo h1{font-family:var(--font-display);font-size:38px;font-weight:800;letter-spacing:3px;background:linear-gradient(135deg,var(--orange),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .login-logo p{font-size:11px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:4px;}
 .login-card{background:#fff;border-radius:20px;padding:26px 22px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,.08);}
-.login-card h2{font-size:20px;font-weight:800;margin-bottom:18px;}
+.login-card h2{font-size:20px;font-weight:800;margin-bottom:6px;}
+.login-card .sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
 .err{background:#FFF0F0;border:1px solid #FFCCCC;color:#CC0000;border-radius:var(--radius-xs);padding:10px 13px;font-size:13px;margin-bottom:13px;display:none;}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.6px;}
@@ -56,13 +58,16 @@ button{cursor:pointer;border:none;background:none;}
 .btn-main:active{opacity:.85;}
 .switch-link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);}
 .switch-link a{color:var(--cyan);text-decoration:none;font-weight:700;}
-.login-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;}
-.topbar{height:56px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
-.topbar-brand{flex:1;}
-.topbar-name{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:2px;background:linear-gradient(90deg,var(--orange),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.topbar-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:-2px;}
-.icon-btn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--muted);transition:all .15s;position:relative;}
+
+/* ── TOPBAR con nombre usuario ── */
+.topbar{height:60px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
+.topbar-brand{flex:1;min-width:0;}
+.topbar-name{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:2px;background:linear-gradient(90deg,var(--orange),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.topbar-user{font-size:12px;color:var(--text);font-weight:700;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-rut{font-size:10px;color:var(--muted);letter-spacing:.5px;}
+.icon-btn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--muted);transition:all .15s;position:relative;flex-shrink:0;}
 .notif-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--red);border-radius:50%;border:2px solid #fff;}
+
 .status-bar{background:#fff;border-bottom:1px solid var(--border);padding:8px 12px;display:flex;gap:7px;overflow-x:auto;flex-shrink:0;}
 .status-bar::-webkit-scrollbar{display:none;}
 .schip{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg3);color:var(--muted);white-space:nowrap;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;flex-shrink:0;}
@@ -71,10 +76,12 @@ button{cursor:pointer;border:none;background:none;}
 .schip.on-descansando{background:#E8F8FF;border-color:#0EA5E9;color:#0369A1;}
 .schip.on-fuera{background:var(--bg4);border-color:var(--muted);color:var(--muted);}
 .sdot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
 .tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
 .tab{flex:1;padding:12px 4px;text-align:center;font-size:13px;font-weight:700;color:var(--muted);border:none;background:#fff;border-bottom:2.5px solid transparent;transition:all .2s;position:relative;}
 .tab.active{color:var(--orange);border-bottom-color:var(--orange);}
 .tbadge{position:absolute;top:8px;right:10px;background:var(--red);color:white;border-radius:10px;font-size:10px;font-weight:800;padding:1px 5px;}
+
 .list-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .list-scroll::-webkit-scrollbar{display:none;}
 .sec-hdr{padding:10px 16px 4px;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;background:var(--bg3);}
@@ -91,13 +98,16 @@ button{cursor:pointer;border:none;background:none;}
 .cmeta{text-align:right;flex-shrink:0;}
 .ctime{font-size:11px;color:var(--muted);}
 .badge{background:var(--orange);color:white;border-radius:10px;font-size:11px;font-weight:800;padding:2px 7px;margin-top:4px;display:inline-block;}
+
 .fab{position:fixed;bottom:22px;right:18px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#FF3D00);border:none;color:white;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,107,43,.5);z-index:30;transition:transform .2s;}
 .fab:active{transform:scale(.9);}
+
 .chat-topbar{height:56px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
 .back-btn{color:var(--orange);font-size:24px;padding:4px 8px 4px 0;}
 .chat-top-name{font-size:15px;font-weight:800;}
 .chat-top-sub{font-size:12px;color:var(--muted);}
 .chat-top-info{flex:1;min-width:0;}
+
 .msgs{flex:1;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;gap:4px;background:var(--bg3);}
 .msgs::-webkit-scrollbar{display:none;}
 .datediv{text-align:center;font-size:11px;color:var(--muted);padding:8px 0;position:relative;}
@@ -118,6 +128,7 @@ button{cursor:pointer;border:none;background:none;}
 .tts-btn span{font-size:11px;font-weight:700;}
 .bub.me .tts-btn{color:rgba(255,255,255,.9);}
 .bub.them .tts-btn{color:var(--cyan);}
+
 .vbub{padding:10px 13px;display:flex;align-items:center;gap:10px;min-width:190px;}
 .pbtn{width:40px;height:40px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .bub.them .pbtn{background:linear-gradient(135deg,var(--orange),#FF3D00);color:white;}
@@ -128,6 +139,7 @@ button{cursor:pointer;border:none;background:none;}
 .bub.me .wb{background:rgba(255,255,255,.65);}
 .vdur{font-size:12px;opacity:.65;flex-shrink:0;}
 .bub.me .vdur{color:rgba(255,255,255,.8);}
+
 .dbub{padding:10px 13px;display:flex;align-items:center;gap:10px;min-width:210px;}
 .dic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .bub.them .dic{background:rgba(255,107,43,.15);}
@@ -141,6 +153,7 @@ button{cursor:pointer;border:none;background:none;}
 .bub.them .dbtn2.share{background:var(--bg5);color:var(--text);}
 .bub.me .dbtn2.open{background:rgba(255,255,255,.25);color:white;}
 .bub.me .dbtn2.share{background:rgba(0,0,0,.2);color:white;}
+
 .input-area{background:#fff;padding:8px 10px;display:flex;align-items:flex-end;gap:8px;border-top:1px solid var(--border);flex-shrink:0;}
 .iwrap{flex:1;background:var(--bg3);border:1.5px solid #C8CDD8;border-radius:22px;display:flex;align-items:center;min-height:42px;}
 .mta{flex:1;background:none;border:none;padding:10px 12px;color:var(--text);font-size:15px;outline:none;resize:none;max-height:100px;min-height:22px;line-height:1.4;}
@@ -151,8 +164,7 @@ button{cursor:pointer;border:none;background:none;}
 .mbtn{background:var(--bg3);color:var(--muted);border:1.5px solid #C8CDD8;}
 .mbtn.rec{background:var(--red);color:white;border-color:var(--red);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
-.demo-banner{background:linear-gradient(90deg,#E8F8FF,#F0FAFF);border-bottom:1px solid var(--cyan);padding:7px 14px;font-size:12px;color:var(--cyan);display:none;flex-shrink:0;align-items:center;gap:6px;}
-.demo-banner.on{display:flex;}
+
 .sheet-ov{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:79;display:none;}
 .sheet-ov.on{display:block;}
 .bsheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0;border-top:1px solid var(--border);z-index:80;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.67,0);}
@@ -181,10 +193,12 @@ button{cursor:pointer;border:none;background:none;}
 .sico{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;}
 .sopt span{font-size:11px;color:var(--muted);}
 .sheet-close{width:calc(100% - 32px);margin:0 16px 4px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px;color:var(--text);font-size:15px;font-weight:700;}
+
 .notif-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);}
 .ntitle{font-size:14px;font-weight:700;}
 .nbody{font-size:13px;color:var(--muted);margin-top:2px;}
 .ntime{font-size:11px;color:var(--muted);flex-shrink:0;margin-top:2px;}
+
 .toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(10px);background:#1A1D2E;border:1px solid #333;color:white;border-radius:20px;padding:10px 20px;font-size:14px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .loverlay{position:fixed;inset:0;background:rgba(245,247,250,.9);z-index:400;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
@@ -224,6 +238,7 @@ button{cursor:pointer;border:none;background:none;}
   </div>
 </div>
 
+<!-- SPLASH -->
 <div id="splash" class="screen active">
   <div class="splash-inner">
     <span class="splash-icon">🚛</span>
@@ -234,36 +249,43 @@ button{cursor:pointer;border:none;background:none;}
   </div>
 </div>
 
+<!-- LOGIN -->
 <div id="loginScreen" class="screen">
   <div style="flex:1;overflow-y:auto;">
     <div class="login-wrap">
       <div class="login-logo"><span class="ico">🚛</span><h1>RUTAVOZ</h1><p>CAIV SPA · Transporte Terrestre</p></div>
       <div class="login-card" id="loginForm">
-        <h2>Iniciar Sesión</h2>
+        <h2>Ingresar</h2>
+        <div class="sub">Ingresa tu RUT para entrar</div>
         <div class="err" id="loginErr"></div>
-        <div class="field"><label>RUT (con guión, sin puntos)</label><input type="text" id="lRut" placeholder="12345678-9" maxlength="12"></div>
-        <div class="field"><label>Contraseña</label><input type="password" id="lPass" placeholder="Tu contraseña" onkeydown="if(event.key==='Enter')doLogin()"></div>
-        <button class="btn-main" onclick="doLogin()">🚀 Ingresar</button>
-        <div class="switch-link">¿Primera vez? <a href="#" onclick="toggleForm(true)">Crear cuenta</a></div>
-        <p class="login-note">🔒 Contraseña = tu RUT sin puntos ni guión</p>
+        <div class="field">
+          <label>RUT (con guión, sin puntos)</label>
+          <input type="text" id="lRut" placeholder="12345678-9" maxlength="12" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button class="btn-main" onclick="doLogin()">🚀 Continuar</button>
+        <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;">Si es tu primera vez, se creará tu cuenta automáticamente 👆</p>
       </div>
-      <div class="login-card" id="regForm" style="display:none;">
-        <h2>Crear Cuenta</h2>
+      <div class="login-card" id="regForm" style="display:none;margin-top:16px;">
+        <h2>👋 ¡Bienvenido!</h2>
+        <div class="sub">Completa tus datos para continuar</div>
         <div class="err" id="regErr"></div>
         <div class="field"><label>Nombre completo</label><input type="text" id="rName" placeholder="Carlos Muñoz" maxlength="40"></div>
-        <div class="field"><label>RUT (con guión)</label><input type="text" id="rRut" placeholder="12345678-9" maxlength="12"></div>
         <div class="field"><label>Cargo / Rol</label><input type="text" id="rRole" placeholder="Ej: Conductor, Jefe de Flota..."></div>
-        <div class="field"><label>Contraseña (mín. 4 caracteres)</label><input type="password" id="rPass" placeholder="Elige una contraseña"></div>
-        <button class="btn-main" onclick="doRegister()">✅ Crear cuenta</button>
-        <div class="switch-link">¿Ya tienes cuenta? <a href="#" onclick="toggleForm(false)">Iniciar sesión</a></div>
+        <button class="btn-main" onclick="doRegister()">✅ Crear mi cuenta</button>
+        <div class="switch-link"><a href="#" onclick="cancelReg()">← Volver</a></div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MAIN -->
 <div id="mainScreen" class="screen">
   <div class="topbar">
-    <div class="topbar-brand"><div class="topbar-name">🚛 RUTAVOZ</div><div class="topbar-sub">CAIV SPA</div></div>
+    <div class="topbar-brand">
+      <div class="topbar-name">🚛 RUTAVOZ</div>
+      <!-- ✅ NOMBRE DEL USUARIO CONECTADO -->
+      <div class="topbar-user" id="topbarUser">Cargando...</div>
+    </div>
     <button class="icon-btn" onclick="showNotifs()">🔔<span class="notif-dot" id="notifDot" style="display:none"></span></button>
     <button class="icon-btn" onclick="openProfile()">👤</button>
   </div>
@@ -277,6 +299,7 @@ button{cursor:pointer;border:none;background:none;}
   <button class="fab" id="fab" onclick="onFab()">✏️</button>
 </div>
 
+<!-- CHAT -->
 <div id="chatScreen" class="screen">
   <div class="chat-topbar">
     <button class="back-btn" onclick="backToMain()">←</button>
@@ -284,7 +307,6 @@ button{cursor:pointer;border:none;background:none;}
     <div class="chat-top-info"><div class="chat-top-name" id="chatName"></div><div class="chat-top-sub" id="chatSub"></div></div>
     <button class="icon-btn" onclick="openShareSheet('chat')">📤</button>
   </div>
-  <div class="demo-banner" id="demoBanner">⚡ Modo demo local</div>
   <div class="msgs" id="msgs"></div>
   <div class="input-area">
     <div class="iwrap">
@@ -296,19 +318,21 @@ button{cursor:pointer;border:none;background:none;}
   </div>
 </div>
 
+<!-- NOTIFS -->
 <div id="notifsScreen" class="screen">
   <div class="topbar">
     <button class="back-btn" style="color:var(--orange);font-size:22px;padding:0 8px 0 0;" onclick="showScreen('mainScreen')">←</button>
-    <div class="topbar-brand"><div class="topbar-name">🔔 Notificaciones</div><div class="topbar-sub">CAIV SPA</div></div>
+    <div class="topbar-brand"><div class="topbar-name">🔔 Notificaciones</div></div>
     <button class="icon-btn" onclick="clearNotifs()">🗑</button>
   </div>
   <div class="list-scroll" id="notifsList"></div>
 </div>
 
+<!-- PERFIL -->
 <div id="profileScreen" class="screen">
   <div class="topbar">
     <button class="back-btn" style="color:var(--orange);font-size:22px;padding:0 8px 0 0;" onclick="showScreen('mainScreen')">←</button>
-    <div class="topbar-brand"><div class="topbar-name">👤 Mi Perfil</div><div class="topbar-sub">CAIV SPA</div></div>
+    <div class="topbar-brand"><div class="topbar-name">👤 Mi Perfil</div></div>
     <button class="icon-btn" onclick="saveProfile()" style="color:var(--green);font-weight:800;font-size:13px;width:auto;padding:0 8px;">Guardar</button>
   </div>
   <div style="flex:1;overflow-y:auto;padding:20px 16px 40px;">
@@ -335,17 +359,6 @@ button{cursor:pointer;border:none;background:none;}
         <div style="font-size:16px;font-weight:600;color:var(--muted);" id="editRutShow"></div>
       </div>
     </div>
-    <div style="background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px;">
-      <div style="padding:14px 16px;font-size:13px;font-weight:800;color:var(--muted);border-bottom:1px solid var(--border);">🔒 Cambiar Contraseña</div>
-      <div style="padding:14px 16px;border-bottom:1px solid var(--border);">
-        <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">Contraseña actual</div>
-        <input type="password" id="editPassOld" style="width:100%;background:none;border:none;font-size:15px;color:var(--text);outline:none;font-family:var(--font);" placeholder="••••••••">
-      </div>
-      <div style="padding:14px 16px;">
-        <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">Nueva contraseña</div>
-        <input type="password" id="editPassNew" style="width:100%;background:none;border:none;font-size:15px;color:var(--text);outline:none;font-family:var(--font);" placeholder="••••••••">
-      </div>
-    </div>
     <div style="background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:24px;">
       <div style="padding:14px 16px;font-size:13px;font-weight:800;color:var(--muted);border-bottom:1px solid var(--border);">🚦 Estado actual</div>
       <div style="padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;" id="profileStatusOpts"></div>
@@ -356,6 +369,7 @@ button{cursor:pointer;border:none;background:none;}
   </div>
 </div>
 
+<!-- SHEETS -->
 <div class="sheet-ov" id="sheetOv" onclick="closeAllSheets()"></div>
 <div class="bsheet" id="attSheet">
   <div class="shandle"></div><div class="stitle">📎 Adjuntar archivo</div>
@@ -408,9 +422,10 @@ const FB_CFG={apiKey:"AIzaSyDeSkttVozSa4Ww1S7WrMmdJyzqINKgnv0",authDomain:"rutav
 
 let db=null,fbAuth=null,DEMO=false;
 let ME=null,CHAT=null,TAB='chats';
+let PENDING_RUT='';
 let shareCtx='',mediaRec=null,audioChunks=[],recInt=null,recSecs=0,isRec=false;
 let curAudio=null,notifs=[],unsubs=[];
-let CONTACTS_CACHE=[];  // ← CONTACTOS DESDE FIREBASE
+let CONTACTS_CACHE=[];
 
 const LS={get(k,d=null){try{const v=localStorage.getItem(k);return v!=null?JSON.parse(v):d;}catch{return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}},del(k){try{localStorage.removeItem(k);}catch{}}};
 
@@ -438,52 +453,78 @@ function norm(r){return String(r).replace(/[.\-\s]/g,'').toLowerCase();}
 function initials(n){return(n||'??').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'??';}
 const COLS=['#FF6B2B','#00D9FF','#39FF14','#FF2D78','#FFD700','#4C9EFF','#FF8C55','#23D18B'];
 function randCol(){return COLS[Math.floor(Math.random()*COLS.length)];}
-function hash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return String(h);}
-function toggleForm(reg){document.getElementById('loginForm').style.display=reg?'none':'';document.getElementById('regForm').style.display=reg?'':'none';}
 
+// ══════════════════════════════════════
+// ID DE CHAT COMPARTIDO ENTRE 2 USUARIOS
+// Siempre el mismo sin importar quién inicia
+// ══════════════════════════════════════
+function chatId(uid1, uid2){
+  return [uid1, uid2].sort().join('__');
+}
+
+// ══════════════════════════════════════
+// LOGIN — SOLO RUT
+// ══════════════════════════════════════
 async function doLogin(){
-  const rut=document.getElementById('lRut').value.trim(),pass=document.getElementById('lPass').value.trim();
+  const rut=document.getElementById('lRut').value.trim();
   const err=document.getElementById('loginErr');err.style.display='none';
-  if(!rut||!pass){err.style.display='block';err.textContent='Completa todos los campos.';return;}
-  const rn=norm(rut),pn=norm(pass);showL('Verificando...');
+  if(!rut){err.style.display='block';err.textContent='Ingresa tu RUT.';return;}
+  const rn=norm(rut);
+  if(rn.length<7){err.style.display='block';err.textContent='RUT inválido, revisa el formato.';return;}
+  showL('Buscando...');
   if(DEMO){
-    if(pn!==rn){hideL();err.style.display='block';err.textContent='Contraseña incorrecta.';return;}
     const users=LS.get('rv_users',{});
-    if(!users[rn]){hideL();err.style.display='block';err.textContent='RUT no registrado.';return;}
-    ME=users[rn];LS.set('rv_me',ME);hideL();enterApp();return;
+    if(users[rn]){ME=users[rn];LS.set('rv_me',ME);hideL();enterApp();}
+    else{hideL();PENDING_RUT=rut;showRegForm();}
+    return;
   }
   try{
     const snap=await db.collection('users').where('rn','==',rn).limit(1).get();
-    if(snap.empty){hideL();err.style.display='block';err.textContent='RUT no registrado.';return;}
-    const d=snap.docs[0].data();
-    if(d.ph!==hash(pn)){hideL();err.style.display='block';err.textContent='Contraseña incorrecta.';return;}
-    ME={...d,uid:snap.docs[0].id};LS.set('rv_me',ME);hideL();enterApp();
+    if(!snap.empty){ME={...snap.docs[0].data(),uid:snap.docs[0].id};LS.set('rv_me',ME);hideL();enterApp();}
+    else{hideL();PENDING_RUT=rut;showRegForm();}
   }catch(e){hideL();showToast('Error: '+e.message);}
 }
 
+function showRegForm(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('regForm').style.display='';
+  document.getElementById('rName').focus();
+}
+function cancelReg(){
+  PENDING_RUT='';
+  document.getElementById('loginForm').style.display='';
+  document.getElementById('regForm').style.display='none';
+  document.getElementById('regErr').style.display='none';
+}
+
 async function doRegister(){
-  const name=document.getElementById('rName').value.trim(),rut=document.getElementById('rRut').value.trim();
-  const role=document.getElementById('rRole').value,pass=document.getElementById('rPass').value.trim();
+  const name=document.getElementById('rName').value.trim();
+  const role=document.getElementById('rRole').value.trim();
   const err=document.getElementById('regErr');err.style.display='none';
-  if(!name||!rut||!pass){err.style.display='block';err.textContent='Completa todos los campos.';return;}
-  if(pass.length<4){err.style.display='block';err.textContent='Contraseña muy corta (mín. 4 caracteres).';return;}
-  const rn=norm(rut);
-  const user={uid:'u_'+rn,rn,rut,name,role,color:randCol(),initials:initials(name),status:'disponible',ph:hash(norm(pass)),ts:Date.now()};
+  if(!name){err.style.display='block';err.textContent='Ingresa tu nombre completo.';return;}
+  const rn=norm(PENDING_RUT);
+  const user={rn,rut:PENDING_RUT,name,role:role||'Conductor',color:randCol(),initials:initials(name),status:'disponible',ts:Date.now()};
   showL('Creando cuenta...');
   if(DEMO){
-    const users=LS.get('rv_users',{});
-    if(users[rn]){hideL();err.style.display='block';err.textContent='Este RUT ya está registrado.';return;}
-    users[rn]=user;LS.set('rv_users',users);ME=user;LS.set('rv_me',ME);hideL();enterApp();return;
+    const users=LS.get('rv_users',{});user.uid='u_'+rn;users[rn]=user;LS.set('rv_users',users);
+    ME=user;LS.set('rv_me',ME);hideL();enterApp();return;
   }
   try{
     const snap=await db.collection('users').where('rn','==',rn).limit(1).get();
-    if(!snap.empty){hideL();err.style.display='block';err.textContent='RUT ya registrado.';return;}
+    if(!snap.empty){ME={...snap.docs[0].data(),uid:snap.docs[0].id};LS.set('rv_me',ME);hideL();enterApp();return;}
     const ref=await db.collection('users').add(user);
     ME={...user,uid:ref.id};LS.set('rv_me',ME);hideL();enterApp();
   }catch(e){hideL();showToast('Error: '+e.message);}
 }
 
-function doLogout(){unsubs.forEach(u=>u());unsubs=[];CONTACTS_CACHE=[];LS.del('rv_me');ME=null;showScreen('loginScreen');showToast('Sesión cerrada');}
+function doLogout(){
+  unsubs.forEach(u=>u());unsubs=[];CONTACTS_CACHE=[];LS.del('rv_me');ME=null;
+  document.getElementById('loginForm').style.display='';
+  document.getElementById('regForm').style.display='none';
+  document.getElementById('lRut').value='';
+  showScreen('loginScreen');showToast('Sesión cerrada');
+}
+
 function openDeleteModal(){document.getElementById('deleteModal').classList.add('on');}
 function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('on');}
 async function confirmDeleteAccount(){
@@ -492,15 +533,18 @@ async function confirmDeleteAccount(){
     if(!DEMO&&db)await db.collection('users').doc(ME.uid).delete();
     else{const u=LS.get('rv_users',{});delete u[ME.rn];LS.set('rv_users',u);}
     unsubs.forEach(u=>u());unsubs=[];CONTACTS_CACHE=[];LS.del('rv_me');ME=null;
+    document.getElementById('lRut').value='';
     hideL();showScreen('loginScreen');showToast('✅ Cuenta eliminada');
   }catch(e){hideL();showToast('❌ Error: '+e.message);}
 }
 
 // ══════════════════════════════════════
-// ENTER APP — carga contactos desde Firebase
+// ENTER APP
 // ══════════════════════════════════════
 function enterApp(){
-  renderStatus();showScreen('mainScreen');
+  renderStatus();
+  // ✅ Mostrar nombre en topbar
+  document.getElementById('topbarUser').textContent='👤 '+ME.name+' · '+ME.rut;
   if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();
   addNotif('🚛 Bienvenido a RutaVoz','Sesión iniciada como '+ME.name,Date.now(),false);
   loadContactsFromFirebase();
@@ -511,13 +555,10 @@ function loadContactsFromFirebase(){
     CONTACTS_CACHE=Object.values(LS.get('rv_users',{})).filter(u=>u.uid!==ME.uid);
     switchTab('chats');return;
   }
-  // Escucha en tiempo real todos los usuarios
   const u=db.collection('users').onSnapshot(snap=>{
-    CONTACTS_CACHE=snap.docs
-      .map(d=>({...d.data(),uid:d.id}))
-      .filter(c=>c.uid!==ME.uid&&c.rn!==ME.rn);
+    CONTACTS_CACHE=snap.docs.map(d=>({...d.data(),uid:d.id})).filter(c=>c.uid!==ME.uid&&c.rn!==ME.rn);
     renderList();
-  },e=>{console.warn('Contacts error:',e);});
+  },e=>{console.warn('Contacts:',e);});
   unsubs.push(u);
   switchTab('chats');
 }
@@ -526,18 +567,13 @@ const STS=[{k:'enruta',l:'🚛 En ruta',c:'enruta'},{k:'disponible',l:'✅ Dispo
 function renderStatus(){document.getElementById('statusBar').innerHTML=STS.map(s=>`<button class="schip ${ME.status===s.k?'on-'+s.c:''}" onclick="setStatus('${s.k}')"><div class="sdot"></div>${s.l}</button>`).join('');}
 async function setStatus(st){ME.status=st;LS.set('rv_me',ME);renderStatus();if(!DEMO&&db){try{await db.collection('users').doc(ME.uid).update({status:st});}catch{}}showToast('Estado: '+STS.find(s=>s.k===st)?.l);}
 
-function switchTab(t){
-  TAB=t;
-  ['chats','groups','contacts'].forEach(x=>document.getElementById('tab'+x[0].toUpperCase()+x.slice(1)).classList.toggle('active',x===t));
-  document.getElementById('fab').innerHTML=t==='groups'?'👥':'✏️';
-  renderList();
-}
+function switchTab(t){TAB=t;['chats','groups','contacts'].forEach(x=>document.getElementById('tab'+x[0].toUpperCase()+x.slice(1)).classList.toggle('active',x===t));document.getElementById('fab').innerHTML=t==='groups'?'👥':'✏️';renderList();}
 function onFab(){if(TAB==='groups')openGrpSheet();else{switchTab('contacts');showToast('Selecciona un contacto');}}
 
 function getContacts(){return CONTACTS_CACHE;}
 function getGroups(){return LS.get('rv_grps_'+ME.uid,[]);}
-function getMsgs(id){return LS.get('rv_msg_'+ME.uid+'_'+id,[]);}
-function saveMsgs(id,msgs){LS.set('rv_msg_'+ME.uid+'_'+id,msgs);}
+function getMsgs(id){return LS.get('rv_msg_'+id,[]);}
+function saveMsgs(id,msgs){LS.set('rv_msg_'+id,msgs);}
 function lastMsg(id){const m=getMsgs(id);return m.length?m[m.length-1]:null;}
 function unread(id){return getMsgs(id).filter(m=>m.from!==ME.uid&&!m.read).length;}
 function stLabel(st){const m={enruta:['sl-enruta','En ruta'],disponible:['sl-disponible','Disponible'],descansando:['sl-descansando','Descansando']};if(!st||!m[st])return '';return `<span class="slabel ${m[st][0]}">${m[st][1]}</span>`;}
@@ -551,7 +587,7 @@ function renderList(){
       <div class="av" style="width:48px;height:48px;background:${c.color}22;color:${c.color}">${c.initials}</div>
       <div style="flex:1;min-width:0"><div class="cname">${esc(c.name)} ${stLabel(c.status)}</div><div class="cpreview">${esc(c.role||'Conductor')}</div></div>
       <div style="font-size:12px;color:var(--cyan);font-weight:700">Chatear →</div></div>`).join(''):
-      `<div class="empty"><div class="empty-ico">👥</div><div class="empty-txt">Sin contactos aún</div><div class="empty-sub">Los compañeros aparecerán aquí cuando se registren</div></div>`);
+      `<div class="empty"><div class="empty-ico">👥</div><div class="empty-txt">Sin contactos aún</div><div class="empty-sub">Los compañeros aparecerán aquí cuando ingresen</div></div>`);
     return;
   }
   if(TAB==='groups'){
@@ -561,19 +597,24 @@ function renderList(){
     return;
   }
   const all=[...getGroups().map(g=>({...g,_g:true})),...getContacts()];
-  const wm=all.filter(x=>getMsgs(x.id||x.uid).length).sort((a,b)=>(lastMsg(b.id||b.uid)?.ts||0)-(lastMsg(a.id||a.uid)?.ts||0));
-  const tot=all.reduce((s,x)=>s+unread(x.id||x.uid),0);
+  // Usar chatId compartido para mostrar conversaciones
+  const wm=all.filter(x=>{const cid=x._g?x.id:chatId(ME.uid,x.uid);return getMsgs(cid).length;}).sort((a,b)=>{
+    const ca=a._g?a.id:chatId(ME.uid,a.uid),cb=b._g?b.id:chatId(ME.uid,b.uid);
+    return(lastMsg(cb)?.ts||0)-(lastMsg(ca)?.ts||0);
+  });
+  const tot=all.reduce((s,x)=>{const cid=x._g?x.id:chatId(ME.uid,x.uid);return s+unread(cid);},0);
   const badge=document.getElementById('chatsBadge');badge.style.display=tot>0?'':'none';badge.textContent=tot;
   el.innerHTML=wm.length?wm.map(x=>chatItem(x)).join(''):
     `<div class="empty"><div class="empty-ico">💬</div><div class="empty-txt">Sin conversaciones</div><div class="empty-sub">Ve a Contactos y empieza a chatear</div></div>`;
 }
 
 function chatItem(x){
-  const id=x.id||x.uid,lm=lastMsg(id),ur=unread(id);
+  const cid=x._g?x.id:chatId(ME.uid,x.uid);
+  const lm=lastMsg(cid),ur=unread(cid);
   let prev='',pico='';
   if(lm){if(lm.type==='text')prev=lm.text;else if(lm.type==='voice'){prev='Mensaje de voz';pico='🎙';}else if(lm.type==='doc'){prev=lm.fn||'Archivo';pico=dico(lm.ft);}}
   else prev=x._g?'Grupo':'Toca para chatear';
-  return`<div class="chat-item" onclick="openChat('${id}','${x._g?'group':'contact'}')">
+  return`<div class="chat-item" onclick="openChat('${x._g?x.id:x.uid}','${x._g?'group':'contact'}')">
     <div class="av ${x._g?'av-grp':''}" style="width:48px;height:48px;background:${x.color}22;color:${x.color}">${x.initials}</div>
     <div style="flex:1;min-width:0"><div class="cname">${esc(x.name)} ${!x._g?stLabel(x.status):''}</div>
     <div class="cpreview">${pico?pico+' ':''}${esc((prev||'').substring(0,45))}</div></div>
@@ -585,14 +626,15 @@ function openChat(id,type){
   const isG=type==='group';
   const entity=isG?getGroups().find(g=>g.id===id):getContacts().find(c=>c.uid===id);
   if(!entity){showToast('Contacto no encontrado');return;}
-  CHAT={...entity,chatId:id,isG};
-  const msgs=getMsgs(id);msgs.forEach(m=>{if(m.from!==ME.uid)m.read=true;});saveMsgs(id,msgs);
+  // ✅ ID de chat compartido: mismo ID para ambos usuarios
+  const cid=isG?id:chatId(ME.uid,id);
+  CHAT={...entity,chatId:cid,isG};
+  const msgs=getMsgs(cid);msgs.forEach(m=>{if(m.from!==ME.uid)m.read=true;});saveMsgs(cid,msgs);
   document.getElementById('chatName').textContent=entity.name;
   document.getElementById('chatSub').textContent=isG?`${(entity.members||[]).length} miembros`:(STS.find(s=>s.k===entity.status)?.l||'');
   const av=document.getElementById('chatAv');av.textContent=entity.initials;av.style.background=entity.color+'22';av.style.color=entity.color;av.style.borderRadius=isG?'10px':'50%';
-  document.getElementById('demoBanner').classList.toggle('on',DEMO);
   showScreen('chatScreen');renderMsgs();
-  if(!DEMO&&db)listenMsgs(id);
+  if(!DEMO&&db)listenMsgs(cid);
 }
 
 function renderMsgs(){
@@ -618,15 +660,35 @@ function renderMsgs(){
 }
 
 function mkMsg(x){return{id:'m'+Date.now()+Math.random().toString(36).slice(2),from:ME.uid,sn:ME.name,ts:Date.now(),read:false,...x};}
-function pushMsg(msg){const msgs=getMsgs(CHAT.chatId);msgs.push(msg);saveMsgs(CHAT.chatId,msgs);if(!DEMO&&db)saveFS(msg);renderMsgs();renderList();}
-function sendText(){const ta=document.getElementById('mta'),t=ta.value.trim();if(!t||!CHAT)return;pushMsg(mkMsg({type:'text',text:t}));ta.value='';ta.style.height='';}
-async function saveFS(msg){if(!db)return;try{await db.collection('chats').doc(CHAT.chatId).collection('msgs').add(msg);await db.collection('chats').doc(CHAT.chatId).set({last:msg,upd:Date.now()},{merge:true});}catch(e){console.warn('FS:',e);}}
-function listenMsgs(cid){if(!db)return;const u=db.collection('chats').doc(cid).collection('msgs').orderBy('ts').onSnapshot(snap=>{const msgs=snap.docs.map(d=>({...d.data(),id:d.id}));saveMsgs(cid,msgs);if(CHAT&&CHAT.chatId===cid)renderMsgs();renderList();});unsubs.push(u);}
-
-async function toggleRec(){
-  if(isRec){cancelRec();return;}
-  try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRec=new MediaRecorder(stream);mediaRec.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};mediaRec.onstop=()=>stream.getTracks().forEach(t=>t.stop());mediaRec.start();isRec=true;recSecs=0;document.getElementById('micBtn').classList.add('rec');openSheet('voiceSheet');buildRecWave();recInt=setInterval(()=>{recSecs++;document.getElementById('rtimer').textContent=fmtDur(recSecs);},1000);}catch{showToast('Sin acceso al micrófono');}
+function pushMsg(msg){
+  const msgs=getMsgs(CHAT.chatId);msgs.push(msg);saveMsgs(CHAT.chatId,msgs);
+  if(!DEMO&&db)saveFS(msg);
+  renderMsgs();renderList();
 }
+function sendText(){const ta=document.getElementById('mta'),t=ta.value.trim();if(!t||!CHAT)return;pushMsg(mkMsg({type:'text',text:t}));ta.value='';ta.style.height='';}
+
+async function saveFS(msg){
+  if(!db)return;
+  try{
+    await db.collection('chats').doc(CHAT.chatId).collection('msgs').add(msg);
+    await db.collection('chats').doc(CHAT.chatId).set({last:msg,upd:Date.now(),members:[ME.uid]},{merge:true});
+  }catch(e){console.warn(e);}
+}
+
+function listenMsgs(cid){
+  if(!db)return;
+  // Eliminar listeners de chat anteriores (mantener solo el de contacts)
+  if(unsubs.length>1)unsubs.splice(1).forEach(u=>u());
+  const u=db.collection('chats').doc(cid).collection('msgs').orderBy('ts').onSnapshot(snap=>{
+    const msgs=snap.docs.map(d=>({...d.data(),id:d.id}));
+    saveMsgs(cid,msgs);
+    if(CHAT&&CHAT.chatId===cid){renderMsgs();}
+    renderList();
+  });
+  unsubs.push(u);
+}
+
+async function toggleRec(){if(isRec){cancelRec();return;}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRec=new MediaRecorder(stream);mediaRec.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};mediaRec.onstop=()=>stream.getTracks().forEach(t=>t.stop());mediaRec.start();isRec=true;recSecs=0;document.getElementById('micBtn').classList.add('rec');openSheet('voiceSheet');buildRecWave();recInt=setInterval(()=>{recSecs++;document.getElementById('rtimer').textContent=fmtDur(recSecs);},1000);}catch{showToast('Sin acceso al micrófono');}}
 function stopSendVoice(){if(!mediaRec)return;const dur=recSecs;mediaRec.onstop=()=>{mediaRec.stream&&mediaRec.stream.getTracks().forEach(t=>t.stop());const blob=new Blob(audioChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);pushMsg(mkMsg({type:'voice',url,dur,text:'Mensaje de voz'}));audioChunks=[];};mediaRec.stop();stopRecUI();closeAllSheets();}
 function cancelRec(){if(mediaRec&&mediaRec.state!=='inactive')mediaRec.stop();audioChunks=[];stopRecUI();closeAllSheets();showToast('Grabación cancelada');}
 function stopRecUI(){clearInterval(recInt);recSecs=0;isRec=false;document.getElementById('micBtn').classList.remove('rec');document.getElementById('rtimer').textContent='0:00';}
@@ -647,18 +709,17 @@ function showNotifs(){notifs.forEach(n=>n.unread=false);document.getElementById(
 function clearNotifs(){notifs=[];showNotifs();showToast('Notificaciones eliminadas');}
 
 const PROFILE_COLORS=['#FF6B2B','#00D9FF','#39FF14','#FF2D78','#FFD700','#4C9EFF','#23D18B','#A855F7','#F97316','#EF4444'];
-function openProfile(){if(!ME)return;document.getElementById('editName').value=ME.name||'';document.getElementById('editRole').value=ME.role||'';document.getElementById('editRutShow').textContent=ME.rut||ME.rn||'';document.getElementById('editPassOld').value='';document.getElementById('editPassNew').value='';renderProfileAv();renderColorPicker();renderProfileStatus();showScreen('profileScreen');}
+function openProfile(){if(!ME)return;document.getElementById('editName').value=ME.name||'';document.getElementById('editRole').value=ME.role||'';document.getElementById('editRutShow').textContent=ME.rut||ME.rn||'';renderProfileAv();renderColorPicker();renderProfileStatus();showScreen('profileScreen');}
 function renderProfileAv(){const av=document.getElementById('profileAv');av.textContent=ME.initials||'?';av.style.background=ME.color+'22';av.style.color=ME.color;av.style.borderColor=ME.color;document.getElementById('profileNameBig').textContent=ME.name||'';document.getElementById('profileRutBig').textContent=ME.rut||ME.rn||'';}
 function renderColorPicker(){document.getElementById('colorPicker').innerHTML=PROFILE_COLORS.map(c=>`<div onclick="pickColor('${c}')" style="width:32px;height:32px;border-radius:50%;background:${c};cursor:pointer;border:3px solid ${ME.color===c?'#1A1D2E':'transparent'};transform:${ME.color===c?'scale(1.2)':'scale(1)'}"></div>`).join('');}
 function pickColor(c){ME.color=c;ME.initials=initials(ME.name||'');renderProfileAv();renderColorPicker();}
 function renderProfileStatus(){document.getElementById('profileStatusOpts').innerHTML=STS.map(s=>`<button onclick="setStatus('${s.k}')" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;border:1.5px solid ${ME.status===s.k?'var(--orange)':'var(--border)'};background:${ME.status===s.k?'#FFF0E8':'var(--bg3)'};color:${ME.status===s.k?'var(--orange)':'var(--muted)'};font-size:13px;font-weight:700;font-family:var(--font);">${s.l}</button>`).join('');}
 async function saveProfile(){
   const name=document.getElementById('editName').value.trim(),role=document.getElementById('editRole').value.trim();
-  const oldPass=document.getElementById('editPassOld').value.trim(),newPass=document.getElementById('editPassNew').value.trim();
   if(!name){showToast('⚠️ El nombre no puede estar vacío');return;}
-  if(newPass){if(!oldPass){showToast('⚠️ Ingresa tu contraseña actual');return;}if(hash(norm(oldPass))!==ME.ph){showToast('❌ Contraseña actual incorrecta');return;}if(newPass.length<4){showToast('⚠️ Nueva contraseña muy corta');return;}ME.ph=hash(norm(newPass));}
   ME.name=name;ME.role=role;ME.initials=initials(name);LS.set('rv_me',ME);
-  if(!DEMO&&db){try{await db.collection('users').doc(ME.uid).update({name:ME.name,role:ME.role,initials:ME.initials,color:ME.color,ph:ME.ph});}catch{}}
+  if(!DEMO&&db){try{await db.collection('users').doc(ME.uid).update({name:ME.name,role:ME.role,initials:ME.initials,color:ME.color});}catch{}}
+  document.getElementById('topbarUser').textContent='👤 '+ME.name+' · '+ME.rut;
   renderStatus();showToast('✅ Perfil actualizado');showScreen('mainScreen');
 }
 
